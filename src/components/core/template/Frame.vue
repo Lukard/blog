@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="frame">
+  <div class="frame">
     <Menu />
     <slot v-if="title == null" />
-    <div v-else>
+    <div class="content" v-else>
       <h1 class="title">{{ title }}</h1>
       <slot />
     </div>
@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Menu from "../organism/Menu";
+import Menu from '../organism/Menu';
 export default {
-  name: "Frame",
+  name: 'Frame',
   components: {
     Menu,
   },
@@ -25,17 +25,17 @@ export default {
 <style scoped>
 .frame {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: row;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #1C2834;
-  height: 100%;
+  color: #1c2834;
 }
 .title {
   margin-left: 16px;
+}
+.content {
+  overflow: auto;
 }
 @media only screen and (max-width: 768px) {
   .frame {

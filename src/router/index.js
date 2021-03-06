@@ -1,40 +1,35 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../components/features/home/page/Home.vue';
+import DartVariables from '../components/features/dart/variables/page/DartVariables.vue';
 
-Vue.use(VueRouter);
-
-export const routes = [
+const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("../components/features/home/page/Home.vue"),
+    path: '/',
+    name: 'Home',
+    component: Home,
     meta: {
-      title: "Rubén Abad Sánchez Blog - Best Dart and Flutter courses",
+      title: 'Rubén Abad Sánchez Blog - Best Dart and Flutter courses',
       metaTags: [
         {
-          name: "description",
+          name: 'description',
           content:
-            "Get a PRO developer and create marvelous applications for all platforms. Learn all you need to know about Dart and Flutter to become a hero developer."
-        }
-      ]
-    }
+            'Get a PRO developer and create marvelous applications for all platforms. Learn all you need to know about Dart and Flutter to become a hero developer.',
+        },
+      ],
+    },
   },
   {
-    path: "/course/dart/variables",
-    name: "DartVariables",
-    component: () =>
-      import("../components/features/dart/variables/DartVariables.vue")
+    path: '/course/dart/variables',
+    name: 'DartVariables',
+    component: DartVariables,
   },
   {
-    path: "*",
-    redirect: "/"
-  }
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
+  },
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  routes
-});
+const router = createRouter({ history: createWebHistory(), routes: routes });
 
 router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
@@ -63,7 +58,7 @@ router.beforeEach((to, from, next) => {
 
   // Remove any stale meta tags from the document using the key attribute we set below.
   Array.from(
-    document.querySelectorAll("[data-vue-router-controlled]")
+    document.querySelectorAll('[data-vue-router-controlled]')
   ).map((el) => el.parentNode.removeChild(el));
 
   // Skip rendering meta tags if there are none.
@@ -72,14 +67,14 @@ router.beforeEach((to, from, next) => {
   // Turn the meta tag definitions into actual elements in the head.
   nearestWithMeta.meta.metaTags
     .map((tagDef) => {
-      const tag = document.createElement("meta");
+      const tag = document.createElement('meta');
 
       Object.keys(tagDef).forEach((key) => {
         tag.setAttribute(key, tagDef[key]);
       });
 
       // We use this to track which meta tags we create, so we don't interfere with other ones.
-      tag.setAttribute("data-vue-router-controlled", "");
+      tag.setAttribute('data-vue-router-controlled', '');
 
       return tag;
     })
